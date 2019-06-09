@@ -25,14 +25,14 @@
 				data: {
 				    "datacount": 10, #博客条数
                     "data": [
-				{
-					"blogid": 1,  # 主键
-					"author": "作者",
-					"title": "标题",
-					"content": "博客正文",
-					"comment_num": 100, #此条blog的评论数
-					"date": "时间"
-				}
+					{
+						"blogid": 1,  # 主键
+                        "author": "作者",
+						"title": "标题",
+                        "content": "博客正文",
+                        "comment_num": 100, #此条blog的评论数
+                        "date": 时间
+					}
                     , ...]
 				}
 			}
@@ -55,7 +55,7 @@
 				"title": "标题",
                 "content": "博客正文",
                 "comment_num": 100, #此条blog的评论数
-                "date": "时间"
+                "date": 时间
             }
   - 返回值: 
 
@@ -101,33 +101,19 @@
 
             form-data
             {
-            	"blogid": 1,  # 主键
                 "author": "作者",
                 "title": "标题",
                 "content": "博客正文",
                 "comment_num": 100, #此条blog的评论数
-                "date": "时间"
+                "date": 时间
             }
 
   - 返回值: json
 
            {
 				"code": 0,
-				"msg": null,
-				data: {
-				    "datacount": 10, #博客条数
-				    "data": [
-					{
-					"blogid": 1,  # 主键
-					"author": "作者",
-					"title": "标题",
-					"content": "博客正文",
-					"comment_num": 100, #此条blog的评论数
-					"date": "时间"
-					}
-				    , ...]
-				}
-			}
+				"msg": null
+		   }
     - 错误说明:
 
         错误码 | 说明
@@ -141,18 +127,19 @@
 接口名称 | URL | Http Method
 ------ | ---- | ----
 查询某个blog的评论 | /comment/search | POST
+增加一条评论 | /comment/add | POST
 
 ### 查询某条Blog的评论
-  - 路径: /comment/search
-  - 请求参数:
+- 路径: /comment/search
+- 请求参数:
 
         form-data
         {
             "blogid":1
         } 
 
-  - 返回结果:
-  
+- 返回结果:
+
         json{
             "code": 0,
             "msg": null，
@@ -162,32 +149,59 @@
                     "blogid": 1,
                     "commentid": 2, #评论的主键
                     "author": "评论的用户",
-                    "content": "评论的内容"
+                    "content": "评论的内容",
+                    "date":日期
+                
                 }
                 ,……
             ]
         }
-  - 错误说明:
+- 错误说明:
 
-        错误码 | 说明
-        ---- | -----
-        0 | 成功
-        403 | 请求查询的blog不存在(id错误)
-        400 | 请求连接错误
-        500 | 服务器或者数据库错误
+    错误码 | 说明
+    ---- | -----
+    0 | 成功
+    400 | 请求连接错误
+    500 | 服务器或者数据库错误
+
+### 增加一条评论
+- 路径: /comment/add
+- 请求参数:
+
+        form-data
+        {
+            "blogid": 1 #对应的blogid
+            "author": "作者",
+            "content": "内容",
+            "date": 日期,
+        } 
+
+- 返回结果:
+
+        json
+        {
+            "code": 0,
+            "msg": null
+        }
+- 错误说明:
+
+    错误码 | 说明
+    ---- | -----
+    0 | 成功
+    400 | 请求连接错误
+    500 | 服务器或者数据库错误
 
 
 ## RankService 提供按照Blog评论数排序的排行榜的接口
 接口名称 | URL | Http Method
 ------ | ---- | ----
-查询按照评论数排序 | /rank/comment | GET
-查询按照日期排序 | /rank/date | GET
+查询按照评论数排序 | /rank | GET
 
 ### 查询按照评论数排序
-  - 路径: /rank/comment
-  - 请求参数:NULL
-  - 返回结果:
-  
+ - 路径: /rank/
+ - 请求参数:NULL
+ - 返回结果:
+ 
         json{
             "code": 0,
             "msg": null，
@@ -201,37 +215,11 @@
                 ,……
             ]
         }
-  - 错误说明:
+ - 错误说明:
 
-        错误码 | 说明
-        ---- | -----
-        0 | 成功
-        400 | 请求连接错误
-        500 | 服务器或者数据库错误
-
-### 查询按照评论数排序
-  - 路径: /rank/date
-  - 请求参数:NULL
-  - 返回结果:
-  
-        json{
-            "code": 0,
-            "msg": null，
-            "datacount": 10 #blog的总数目
-            "data": [
-                {
-                    "blogid": 1,
-                    "author": "评论的用户",
-                    "title": "博客标题"
-                }
-                ,……
-            ]
-        }
-  - 错误说明:
-
-        错误码 | 说明
-        ---- | -----
-        0 | 成功
-        400 | 请求连接错误
-        500 | 服务器或者数据库错误
+    错误码 | 说明
+     ---- | -----
+    0 | 成功
+    400 | 请求连接错误
+    500 | 服务器或者数据库错误
 

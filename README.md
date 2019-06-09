@@ -25,14 +25,14 @@
 				data: {
 				    "datacount": 10, #博客条数
                     "data": [
-					{
-						"blogid": 1,  # 主键
-                        "author": "作者",
-						"title": "标题",
-                        "content": "博客正文",
-                        "comment_num": 100, #此条blog的评论数
-                        "date": "时间"
-					}
+				{
+					"blogid": 1,  # 主键
+					"author": "作者",
+					"title": "标题",
+					"content": "博客正文",
+					"comment_num": 100, #此条blog的评论数
+					"date": "时间"
+				}
                     , ...]
 				}
 			}
@@ -116,16 +116,16 @@
 				"msg": null,
 				data: {
 				    "datacount": 10, #博客条数
-                    "data": [
+				    "data": [
 					{
-						"blogid": 1,  # 主键
-                        "author": "作者",
-						"title": "标题",
-                        "content": "博客正文",
-                        "comment_num": 100, #此条blog的评论数
-                        "date": "时间"
+					"blogid": 1,  # 主键
+					"author": "作者",
+					"title": "标题",
+					"content": "博客正文",
+					"comment_num": 100, #此条blog的评论数
+					"date": "时间"
 					}
-                    , ...]
+				    , ...]
 				}
 			}
     - 错误说明:

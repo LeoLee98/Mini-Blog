@@ -4,7 +4,7 @@ import sys
 
 if __name__ == '__main__':
     try:
-        from Flask import flask
+        from flask import Flask
         print("Flask has been intalled")
     except ImportError as exc:
         raise ImportError(

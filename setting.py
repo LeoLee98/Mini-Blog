@@ -1,7 +1,3 @@
-pip install mysql-connector
-pip install Flask
-
-
 #!/usr/bin/env python
 import os
 import sys
@@ -9,6 +5,7 @@ import sys
 if __name__ == '__main__':
     try:
         from Flask import flask
+        print("Flask has been intalled")
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Flask. Are you sure it's installed and "
@@ -18,6 +15,7 @@ if __name__ == '__main__':
     finally:
         try:
             import mysql.connector
+            print("mysql has been intalled")
         except ImportError as exc:
             raise ImportError(
                 "Couldn't import mysql. Are you sure it's installed and "

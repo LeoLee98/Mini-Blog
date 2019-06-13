@@ -13,6 +13,7 @@ if __name__ == '__main__':
             "forget to activate a virtual environment?"
         ) from exc
     finally:
+        pip3 install Flask
         try:
             import mysql.connector
             print("mysql has been intalled")
@@ -22,3 +23,16 @@ if __name__ == '__main__':
                 "available on your PYTHONPATH environment variable? Did you "
                 "forget to activate a virtual environment?"
             ) from exc
+        finally:
+            pip3 install mysql-connector
+            try:
+                import redis
+            print("redis has been intalled")
+        except ImportError as exc:
+            raise ImportError(
+                "Couldn't import redis. Are you sure it's installed and "
+                "available on your PYTHONPATH environment variable? Did you "
+                "forget to activate a virtual environment?"
+            ) from exc
+            finally:
+                pip3 install redis

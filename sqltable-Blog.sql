@@ -9,7 +9,7 @@ create table Blog
 (
 	blogid INT(10) auto_increment ,
     title varchar(40) not null,
-    author varchar(25) not null, # as same as User's username
+    author varchar(25) not null, # as same as User's usernameBlogUser
     content text(1000) default null,
     sub_date varchar(50),
     primary key (blogid)
@@ -21,6 +21,6 @@ create table BlogComment
     blogid INT(10) not null,
     author varchar(25) not null, # as same as User's username
     content text(1000) default null,
-    sub_date varchar(50),
+    sub_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
     primary key (commentid)
 )

@@ -19,6 +19,11 @@ def login():
             <p><input type=submit value=Login>
         </form>
     '''
+@app.route("/set/<arg>") 
+def set(arg):
+    print (request)
+    session['key']=arg
+    return 'save session'
 
 @app.route('/logout')
 def logout():
@@ -30,4 +35,4 @@ def logout():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
-    app.run(port = 5555 , debug = True)
+    app.run(port = 6666 , debug = True)

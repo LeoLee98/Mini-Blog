@@ -1,8 +1,10 @@
 create table User
 (
+    userid INT(10) auto_increment
+    useraccount VARCHAR(20) not null unique,
     username VARCHAR(25) not null,
     passwd VARCHAR(40) not null,
-    primary key(username)
+    primary key(userid)
 )
 ;
 create table Blog

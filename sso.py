@@ -21,7 +21,7 @@ def regist():
         print(username,pwd)
     #生成hash并加盐
     md = hashlib.md5()
-    md.update(username + "leo" + pwd)
+    md.update((username + "leo" + pwd).encode('utf-8'))
     hashpwd = md.hexdigest()
 
     sql = "select * from User where username = '%s'" %(username)
@@ -35,12 +35,13 @@ def regist():
         try:
             cursor.execute(sql)
             db.commit()
-            resp = make_response("success")
             session['username'] = username
+            return Response(json.dumps({'status':200,'msg':'success'}))
         except:
             db.rollback()
+            return Response(json.dumps({'status':503,'msg':'sqlserver error'}))
         
-        return resp
+        
 
     
 

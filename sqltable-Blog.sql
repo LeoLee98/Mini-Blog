@@ -13,10 +13,9 @@ create table Blog
     title varchar(40) not null,
     author varchar(25) not null, # as same as User's usernameBlogUser
     content text(1000) default null,
-    sub_date varchar(50),
+	sub_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
     primary key (blogid)
-)
-;
+);
 create table BlogComment
 (
 	commentid INT(10) auto_increment,

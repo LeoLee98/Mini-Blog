@@ -107,6 +107,7 @@
 接口名称 | URL | Http Method
 ------ | ---- | ----
 [查询所有Blog条目](#blogTotal_search) | /blog/total | GET
+[查询个人Blog条目](#blog_search) | /blog/user | GET
 [修改某个Blog详情](#blog_modify) | /blog/modify | POST
 [删除某个Blog](#blog_delete) | /blog/delete | POST
 [增加一条Blog](#blog_add) | /blog/add | POST
@@ -114,6 +115,36 @@
 ### 2. 接口详情
 - 查询所有Blog条目
   - 路径：/blog/total
+  - 请求参数：NULL
+  - 返回值: json
+
+           {
+				"code": 0,
+				"msg": null,
+				data: {
+				    "datacount": 10, #博客条数
+                    "data": [
+					{
+						"blogid": 1,  # 主键
+                        "author": "作者",
+						"title": "标题",
+                        "content": "博客正文",
+                        "comment_num": 100, #此条blog的评论数
+                        "date": 时间
+					}
+                    , ...]
+				}
+			}
+    - 错误说明:
+
+        错误码 | 说明
+        ---- | -----
+        0 | 成功
+        400 | 请求连接错误
+        500 | 服务器或者数据库错误
+
+- 查询个人Blog条目
+  - 路径：/blog/user
   - 请求参数：NULL
   - 返回值: json
 

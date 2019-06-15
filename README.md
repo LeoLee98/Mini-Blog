@@ -10,6 +10,7 @@
 [登录] | /sso/login | POST
 [注册] | /sso/regist | POST
 [注销] | /sso/logout | GET
+[获取用户信息] | /sso/getInfo | GET
 
 ### 2. 接口详情
 - 注册
@@ -72,6 +73,24 @@
         {
             'code':0,
             'msg':''
+        }
+    - 错误说明
+        
+        错误码 | 说明
+        ---- | -----
+        0   | 成功
+        403 | 用户还未登录
+
+- 获取用户信息
+    - 路径:/sso/getInfo
+    - 请求参数：null   
+    - 返回参数：
+
+        json
+        {
+            'code':0,
+            'msg':'',
+            'username':'username'
         }
     - 错误说明
         

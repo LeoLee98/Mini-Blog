@@ -78,5 +78,14 @@ def logout():
         session.pop('username')
         return jsonify({'code':0,'msg':'successfully logout'})
 
+@app.route("/sso/getInfo",methods = ["GET"])
+def getInfo(): 
+    #校验是否已经登录（为了防止接口攻击
+    if 'username'not in session:
+        return jsonify({'code':403,'msg':'please log in'})
+    else:
+        return jsonify({'code':0,'msg':'successfully get','userName':'%s'%(session.get('username'))})
+
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -5,6 +5,16 @@ from redis import StrictRedis
 from datetime import timedelta
 from flask_cors import CORS
 import hashlib
+import logging
+
+#opentracing 
+from flask import _request_ctx_stack as stack
+# from jaeger_client import Tracer, ConstSampler
+# from jaeger_client.reporter import NullReporter
+# from jaeger_client.codecs import B3Codec
+# from opentracing.ext import tags
+# from opentracing.propagation import Format
+# from opentracing_instrumentation.request_context import get_current_span, span_in_context
 
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
@@ -12,6 +22,83 @@ app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
+
+#opentracing中生成span context部分的头部
+
+# tracer = Tracer(
+#     one_span_per_rpc=True,
+#     service_name='productpage',
+#     reporter=NullReporter(),
+#     sampler=ConstSampler(decision=True),
+#     extra_codecs={Format.HTTP_HEADERS: B3Codec()}
+# )
+
+
+# def trace():
+#     '''
+#     Function decorator that creates opentracing span from incoming b3 headers
+#     '''
+#     def decorator(f):
+#         def wrapper(*args, **kwargs):
+#             request = stack.top.request
+#             try:
+#                 # Create a new span context, reading in values (traceid,
+#                 # spanid, etc) from the incoming x-b3-*** headers.
+#                 span_ctx = tracer.extract(
+#                     Format.HTTP_HEADERS,
+#                     dict(request.headers)
+#                 )
+#                 # Note: this tag means that the span will *not* be
+#                 # a child span. It will use the incoming traceid and
+#                 # spanid. We do this to propagate the headers verbatim.
+#                 rpc_tag = {tags.SPAN_KIND: tags.SPAN_KIND_RPC_SERVER}
+#                 span = tracer.start_span(
+#                     operation_name='op', child_of=span_ctx, tags=rpc_tag
+#                 )
+#             except Exception as e:
+#                 # We failed to create a context, possibly due to no
+#                 # incoming x-b3-*** headers. Start a fresh span.
+#                 # Note: This is a fallback only, and will create fresh headers,
+#                 # not propagate headers.
+#                 span = tracer.start_span('op')
+#             with span_in_context(span):
+#                 r = f(*args, **kwargs)
+#                 return r
+#         wrapper.__name__ = f.__name__
+#         return wrapper
+#     return decorator
+
+#用于opentracing中转发zipkinHeader生成调用链路
+def getForwardHeaders(request):
+    headers = {}
+
+    # x-b3-*** headers can be populated using the opentracing span
+    span = get_current_span()
+    carrier = {}
+    tracer.inject(
+        span_context=span.context,
+        format=Format.HTTP_HEADERS,
+        carrier=carrier)
+
+    headers.update(carrier)
+
+    # We handle other (non x-b3-***) headers manually
+    if 'user' in session:
+        headers['end-user'] = session['username']
+
+    incoming_headers = ['x-request-id']
+
+    # Add user-agent to headers manually
+    if 'user-agent' in request.headers:
+        headers['user-agent'] = request.headers.get('user-agent')
+
+    for ihdr in incoming_headers:
+        val = request.headers.get(ihdr)
+        if val is not None:
+            headers[ihdr] = val
+            #print "incoming: "+ihdr+":"+val
+
+    return headers
 
 #查询全部人员的博客数
 @app.route("/blog/total",methods = ["GET"])
@@ -143,6 +230,21 @@ def blogDelete():
             return jsonify({'code':405,'msg':"request blog not exist"})
     else:
         return jsonify({'code':403,'msg':'please log in'})
+
+@app.route("/rank/",methods = ["GET"])
+#@trace
+def getRank():
+    headers = getForwardHeaders(request)
+    try:
+        url = "127.0.0.1:8090"+ "/getRank/" 
+        res = requests.get(url, headers=headers, timeout=5.0)
+    except:
+        res = None
+    if res and res.status_code == 200:
+        return 200, res.json()
+    else:
+        status = res.status_code if res is not None and res.status_code else 500
+        return status, {'error': 'Sorry, rank service are currently unavailable for you now.'}    
 
             
 if __name__ == '__main__':

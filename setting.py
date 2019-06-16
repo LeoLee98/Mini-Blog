@@ -14,6 +14,7 @@ if __name__ == '__main__':
         ) from exc
     finally:
         os.system('pip install Flask')
+        os.system('pip install flask-session')  
         try:
             import mysql.connector
             print("mysql has been intalled")
@@ -36,3 +37,7 @@ if __name__ == '__main__':
                 ) from exc
             finally:
                 os.system('pip install redis')
+    os.system('pip install flask-sqlalchemy=2.1')             
+                                
+                
+

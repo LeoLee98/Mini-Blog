@@ -1,8 +1,11 @@
 # Mini-Blog
 
 一个用于微服务架构演示的mini blog系统，前端界面提供List样式的博客展示，后台架构主要为四部分
-## SSOService 提供登录注册的接口
 
+## 环境配置
+    运行:python ./setting.py
+## SSOService 提供登录注册的接口
+    运行方式:python ./sso.py 4444端口
 ### 1. 接口概述
 
 接口名称 | URL | Http Method
@@ -101,7 +104,7 @@
 
 
 ## BlogService 提供支持Blog条目的增删查改的接口
-
+    运行方式:python ./blog.py  5555端口
 ### 1. 接口概述
 
 接口名称 | URL | Http Method
@@ -180,11 +183,8 @@
             form-data
             {
                 "blogid": 1,  # 主键
-                "author": "作者",
 				"title": "标题",
                 "content": "博客正文",
-                "comment_num": 100, #此条blog的评论数
-                "date": 时间
             }
   - 返回值: 
 
@@ -230,11 +230,8 @@
 
             form-data
             {
-                "author": "作者",
                 "title": "标题",
                 "content": "博客正文",
-                "comment_num": 100, #此条blog的评论数
-                "date": 时间
             }
 
   - 返回值: json
@@ -253,6 +250,7 @@
                         
 
 ## CommentService 提供每条Blog条目的简单评论的接口(主要是增加评论)
+    运行方式:python ./comment.py  6666端口
 接口名称 | URL | Http Method
 ------ | ---- | ----
 查询某个blog的评论 | /comment/search | POST
@@ -300,9 +298,7 @@
         form-data
         {
             "blogid": 1 #对应的blogid
-            "author": "作者",
             "content": "内容",
-            "date": 日期,
         } 
 
 - 返回结果:
@@ -322,6 +318,7 @@
 
 
 ## RankService 提供按照Blog评论数排序的排行榜的接口
+    运行方式:python ./rank.py  7777端口
 接口名称 | URL | Http Method
 ------ | ---- | ----
 查询按照评论数排序 | /rank | GET

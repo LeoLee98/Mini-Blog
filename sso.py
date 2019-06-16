@@ -11,7 +11,7 @@ app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 
-@app.route("/sso/regist",methods = ["GET","POST"])
+@app.route("/sso/regist/",methods = ["GET","POST"])
 def regist():
     if request.method == 'POST':
         userName = request.form['username']
@@ -42,7 +42,7 @@ def regist():
     else:
         return jsonify({'code':401,'msg':'account has been registed'})
 
-@app.route("/sso/login",methods = ["GET","POST"])
+@app.route("/sso/login/",methods = ["GET","POST"])
 def login():
     if request.method == 'POST':
         userName = request.form['username']
@@ -69,7 +69,7 @@ def login():
             else:
                 return jsonify({'code':404,'msg':'password wrong'})
 
-@app.route("/sso/logout",methods = ["GET","POST"])
+@app.route("/sso/logout/",methods = ["GET","POST"])
 def logout(): 
     #校验是否已经登录（为了防止接口攻击
     if 'username'not in session:
@@ -78,7 +78,7 @@ def logout():
         session.pop('username')
         return jsonify({'code':0,'msg':'successfully logout'})
 
-@app.route("/sso/getInfo",methods = ["GET"])
+@app.route("/sso/getInfo/",methods = ["GET"])
 def getInfo(): 
     #校验是否已经登录（为了防止接口攻击
     if 'username'not in session:
@@ -88,4 +88,4 @@ def getInfo():
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=4444, debug=True)

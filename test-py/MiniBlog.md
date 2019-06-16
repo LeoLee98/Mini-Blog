@@ -10,6 +10,7 @@
 [登录] | /sso/login | POST
 [注册] | /sso/regist | POST
 [注销] | /sso/logout | GET
+[获取用户信息] | /sso/getInfo | GET
 
 ### 2. 接口详情
 - 注册
@@ -80,6 +81,24 @@
         0   | 成功
         403 | 用户还未登录
 
+- 获取用户信息
+    - 路径:/sso/getInfo
+    - 请求参数：null   
+    - 返回参数：
+
+        json
+        {
+            'code':0,
+            'msg':'',
+            'username':'username'
+        }
+    - 错误说明
+        
+        错误码 | 说明
+        ---- | -----
+        0   | 成功
+        403 | 用户还未登录
+
 
 ## BlogService 提供支持Blog条目的增删查改的接口
 
@@ -88,6 +107,7 @@
 接口名称 | URL | Http Method
 ------ | ---- | ----
 [查询所有Blog条目](#blogTotal_search) | /blog/total | GET
+[查询个人Blog条目](#blog_search) | /blog/user | GET
 [修改某个Blog详情](#blog_modify) | /blog/modify | POST
 [删除某个Blog](#blog_delete) | /blog/delete | POST
 [增加一条Blog](#blog_add) | /blog/add | POST
@@ -123,6 +143,36 @@
         400 | 请求连接错误
         500 | 服务器或者数据库错误
 
+- 查询个人Blog条目
+  - 路径：/blog/user
+  - 请求参数：NULL
+  - 返回值: json
+
+           {
+				"code": 0,
+				"msg": null,
+				data: {
+				    "datacount": 10, #博客条数
+                    "data": [
+					{
+						"blogid": 1,  # 主键
+                        "author": "作者",
+						"title": "标题",
+                        "content": "博客正文",
+                        "comment_num": 100, #此条blog的评论数
+                        "date": 时间
+					}
+                    , ...]
+				}
+			}
+    - 错误说明:
+
+        错误码 | 说明
+        ---- | -----
+        0 | 成功
+        400 | 请求连接错误
+        500 | 服务器或者数据库错误
+
 - 修改某条blog情况
   - 路径：/blog/modify
   - 请求参数：
@@ -130,11 +180,8 @@
             form-data
             {
                 "blogid": 1,  # 主键
-                "author": "作者",
 				"title": "标题",
                 "content": "博客正文",
-                "comment_num": 100, #此条blog的评论数
-                "date": 时间
             }
   - 返回值: 
 
@@ -180,11 +227,8 @@
 
             form-data
             {
-                "author": "作者",
                 "title": "标题",
                 "content": "博客正文",
-                "comment_num": 100, #此条blog的评论数
-                "date": 时间
             }
 
   - 返回值: json
@@ -250,9 +294,7 @@
         form-data
         {
             "blogid": 1 #对应的blogid
-            "author": "作者",
             "content": "内容",
-            "date": 日期,
         } 
 
 - 返回结果:

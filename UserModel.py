@@ -24,12 +24,13 @@ class Blog(db.Model):
     author = db.Column(db.String(25),nullable = False)
     content = db.Column(db.Text,nullable = False)
     sub_date = db.Column(db.DateTime,default = datetime.datetime.now())
-    comment_num = db.Column(db.Integer,default = 0)
+    comment_num = db.Column(db.Integer)
 
-    def __init__(self, title , author , content):
+    def __init__(self, title , author , content,comment_num = 0):
         self.title = title
         self.author = author
         self.content = content
+        self.comment_num = 0
 
 #创建博客评论模型
 class BlogComment(db.Model):

@@ -3,6 +3,7 @@ from flask import Flask,request,jsonify,session
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
+from flask_cors import CORS
 import hashlib
 
 app=Flask(__name__)
@@ -10,18 +11,22 @@ app.config['SESSION_TYPE']='redis'
 app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
+CORS(app, supports_credentials=True)
 
 #查询全部人员的博客数
-@app.route("/blog/total/",methods = ["GET"])
+@app.route("/blog/total",methods = ["GET"])
 def total():     
-        data = Blog.query.filter_by().all()
+        #data = Blog.query.filter_by().all()
+        db.session.commit()
+        data = db.session.query(Blog).all()
         resp = {}
-        resp['code'] = 200
+        resp['code'] = 0
         resp['msg'] = 'success query'
         resp_data = {}
         resp_data['datacount'] = len(data)
         data_list = []
         for i in data :
+            print(i.title,i.comment_num)
             single_data = {}
             single_data['blogid'] = i.blogid
             single_data['author'] = i.author
@@ -40,14 +45,17 @@ def total():
 def blogUserQuery():
     if 'username' in session:
         userName = session['username']       
-        data = Blog.query.filter_by(author = userName).all()
+        #data = Blog.query.filter_by(author = userName).all()
+        db.session.commit()
+        data = db.session.query(Blog).filter_by(author = userName).all()
         resp = {}
-        resp['code'] = 200
+        resp['code'] = 0
         resp['msg'] = 'success query'
         resp_data = {}
         resp_data['datacount'] = len(data)
         data_list = []
         for i in data :
+            print(i.title,i.comment_num)
             single_data = {}
             single_data['blogid'] = i.blogid
             single_data['author'] = i.author
@@ -79,7 +87,7 @@ def blogModify():
                     origin_data.title = title
                     origin_data.content = content
                     db.session.commit()
-                    return jsonify({'code':200,'msg':'success update'})
+                    return jsonify({'code':0,'msg':'success update'})
                 except Exception as e:
                     raise e
                     return jsonify({'code':500,'msg':'sqlserver error'})
@@ -94,6 +102,7 @@ def blogModify():
 #为当前用户添加一条博客
 @app.route("/blog/add/",methods = ["POST"])
 def blogAdd():
+    print(session.get('username'))
     if 'username' in session: 
         userName = session['username']
         title = request.form['title']
@@ -102,7 +111,7 @@ def blogAdd():
             new_data = Blog(title,userName,content)
             db.session.add(new_data)
             db.session.commit()
-            return jsonify({'code':200,'msg':'success add'})
+            return jsonify({'code':0,'msg':'success add'})
         except Exception as e:
             raise e
             return jsonify({'code':500,'msg':'sqlserver error'})
@@ -124,7 +133,7 @@ def blogDelete():
                         db.session.delete(i)
                     db.session.delete(origin_data)
                     db.session.commit()
-                    return jsonify({'code':200,'msg':'success delete'})
+                    return jsonify({'code':0,'msg':'success delete'})
                 except Exception as e:
                     raise e
                     return jsonify({'code':500,'msg':'sqlserver error'})

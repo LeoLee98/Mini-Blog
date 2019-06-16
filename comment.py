@@ -3,6 +3,7 @@ from flask import Flask,request,jsonify,session
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
+from flask_cors import CORS
 import hashlib
 
 app=Flask(__name__)
@@ -10,6 +11,7 @@ app.config['SESSION_TYPE']='redis'
 app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
+CORS(app, supports_credentials=True)
 
 #搜索某条博客的全部评论
 @app.route("/comment/search/",methods = ["POST"])
@@ -17,7 +19,7 @@ def commentQuery():
         bid = request.form['blogid']
         data = BlogComment.query.filter_by(blogid = bid).all()
         resp = {}
-        resp['code'] = 200
+        resp['code'] = 0
         resp['msg'] = 'success query'
         resp_data = {}
         resp_data['datacount'] = len(data)
@@ -39,6 +41,7 @@ def commentQuery():
 #为当前用户新增一条评论
 @app.route("/comment/add/",methods = ["POST"])
 def commentAdd():
+    print(request)
     if 'username' in session: 
         userName = session['username']
         bid = request.form['blogid']
@@ -50,7 +53,7 @@ def commentAdd():
                 ref_blog.comment_num = ref_blog.comment_num + 1
                 db.session.add(new_data)
                 db.session.commit()
-                return jsonify({'code':200,'msg':'success add'})
+                return jsonify({'code':0,'msg':'success add'})
             except Exception as e:
                 raise e
                 return jsonify({'code':500,'msg':'sqlserver error'})

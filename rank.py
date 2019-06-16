@@ -3,6 +3,7 @@ from flask import Flask,request,jsonify,session
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
+from flask_cors import CORS
 import hashlib
 
 app=Flask(__name__)
@@ -10,13 +11,14 @@ app.config['SESSION_TYPE']='redis'
 app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
+CORS(app, supports_credentials=True)
 
 #按照评论数排序
 @app.route("/rank/",methods=['GET'])
 def rankComment():
     data = Blog.query.order_by(Blog.comment_num).all()
     resp = {}
-    resp['code'] = 200
+    resp['code'] = 0
     resp['msg'] = 'success query'
     resp_data = {}
     resp_data['datacount'] = len(data)
@@ -39,7 +41,7 @@ def rankComment():
 def rankDate():
     data = Blog.query.order_by(Blog.sub_date).all()
     resp = {}
-    resp['code'] = 200
+    resp['code'] = 0
     resp['msg'] = 'success query'
     resp_data = {}
     resp_data['datacount'] = len(data)

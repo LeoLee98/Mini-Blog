@@ -157,7 +157,7 @@
 				data: {
 				    "datacount": 10, #博客条数
                     "data": [
-					{
+					"data":[{
 						"blogid": 1,  # 主键
                         "author": "作者",
 						"title": "标题",

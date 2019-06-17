@@ -36,7 +36,7 @@ def af_request(resp):
     :return:
     """
     resp = make_response(resp)
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = 'http://115.236.123.247'
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
     return resp

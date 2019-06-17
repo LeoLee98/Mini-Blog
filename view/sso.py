@@ -8,6 +8,7 @@ from redis import StrictRedis
 from datetime import timedelta
 from flask_cors import CORS
 import hashlib
+import logging
 
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
@@ -15,6 +16,12 @@ app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
+
+logging.basicConfig(level=logging.DEBUG,
+                    filename='sso.log',
+                    datefmt='%Y/%m/%d %H:%M:%S',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
+logger = logging.getLogger('sso')
 
 @app.after_request
 def af_request(resp):     
@@ -58,7 +65,7 @@ def regist():
                 return jsonify({'code':0,'msg':'success regist'})
             except:
                 db.rollback()
-                print("rollback")
+                logger.info(e,exc_info=True)
                 return jsonify({'code':500,'msg':'sqlserver error'})
         else:
             return jsonify({'code':401,'msg':'account has been registed'})
@@ -78,7 +85,8 @@ def login():
         #查询是否已经注册
         try:
             detectFlag = User.query.filter_by(username = userName).first()
-        except:
+        except Exception as e:
+            logger.info(e,exc_info=True)
             return jsonify({'code':500,'msg':'sqlserver error'})
         
         if not detectFlag:

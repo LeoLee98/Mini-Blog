@@ -28,6 +28,11 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
 
+logging.basicConfig(level=logging.DEBUG,
+                    filename='blog-trace.log',
+                    datefmt='%Y/%m/%d %H:%M:%S',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
+logger = logging.getLogger('blog-trace')
 @app.after_request
 def af_request(resp):     
     """
@@ -115,14 +120,13 @@ def getForwardHeaders(request):
         val = request.headers.get(ihdr)
         if val is not None:
             headers[ihdr] = val
-            #print "incoming: "+ihdr+":"+val
 
     return headers
 
 #查询全部人员的博客数
 @app.route("/blog/total",methods = ["GET"])
 def total():     
-        #data = Blog.query.filter_by().all()
+    try:
         db.session.commit()
         data = db.session.query(Blog).all()
         resp = {}
@@ -132,7 +136,6 @@ def total():
         resp_data['datacount'] = len(data)
         data_list = []
         for i in data :
-            print(i.title,i.comment_num)
             single_data = {}
             single_data['blogid'] = i.blogid
             single_data['author'] = i.author
@@ -145,35 +148,40 @@ def total():
         resp['data'] = resp_data
 
         return jsonify(resp)
+    except:
+        logger.info(e,exc_info=True)
+        return jsonify({'code':500,'msg':'sqlserver error'})        
 
 #查询当前用户的博客
 @app.route("/blog/user/",methods = ["GET"])
 def blogUserQuery():
     if 'username' in session:
-        userName = session['username']       
-        #data = Blog.query.filter_by(author = userName).all()
-        db.session.commit()
-        data = db.session.query(Blog).filter_by(author = userName).all()
-        resp = {}
-        resp['code'] = 0
-        resp['msg'] = 'success query'
-        resp_data = {}
-        resp_data['datacount'] = len(data)
-        data_list = []
-        for i in data :
-            print(i.title,i.comment_num)
-            single_data = {}
-            single_data['blogid'] = i.blogid
-            single_data['author'] = i.author
-            single_data['content'] = i.content
-            single_data['title'] = i.title
-            single_data['comment_num'] = i.comment_num #后续补上
-            single_data['date'] = i.sub_date
-            data_list.append(single_data)
-        resp_data['data'] = data_list
-        resp['data'] = resp_data
+        userName = session['username']     
+        try:  
+            db.session.commit()
+            data = db.session.query(Blog).filter_by(author = userName).all()
+            resp = {}
+            resp['code'] = 0
+            resp['msg'] = 'success query'
+            resp_data = {}
+            resp_data['datacount'] = len(data)
+            data_list = []
+            for i in data :
+                single_data = {}
+                single_data['blogid'] = i.blogid
+                single_data['author'] = i.author
+                single_data['content'] = i.content
+                single_data['title'] = i.title
+                single_data['comment_num'] = i.comment_num #后续补上
+                single_data['date'] = i.sub_date
+                data_list.append(single_data)
+            resp_data['data'] = data_list
+            resp['data'] = resp_data
 
-        return jsonify(resp)
+            return jsonify(resp)
+        except Exception as e:
+            logger.info(e,exc_info=True)
+            return jsonify({'code':500,'msg':'sqlserver error'})  
     else:
         return jsonify({'code':403,'msg':'please log in'})
 
@@ -196,7 +204,7 @@ def blogModify():
                     db.session.commit()
                     return jsonify({'code':0,'msg':'success update'})
                 except Exception as e:
-                    raise e
+                    logger.info(e,exc_info=True)
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})
@@ -219,7 +227,7 @@ def blogAdd():
             db.session.commit()
             return jsonify({'code':0,'msg':'success add'})
         except Exception as e:
-            raise e
+            logger.info(e,exc_info=True)
             return jsonify({'code':500,'msg':'sqlserver error'})
     else:
         return jsonify({'code':403,'msg':'please log in'})
@@ -241,7 +249,7 @@ def blogDelete():
                     db.session.commit()
                     return jsonify({'code':0,'msg':'success delete'})
                 except Exception as e:
-                    raise e
+                    logger.info(e,exc_info=True)
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})

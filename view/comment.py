@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from sqlmodel.UserModel import User,Blog,BlogComment,db
-from flask import Flask,request,jsonify,session
+from flask import Flask,request,jsonify,session,,make_response
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
@@ -15,6 +15,19 @@ app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
+
+@app.after_request
+def af_request(resp):     
+    """
+    #请求钩子，在所有的请求发生后执行，加入headers。
+    :param resp:
+    :return:
+    """
+    resp = make_response(resp)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
+    resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    return resp
 
 #搜索某条博客的全部评论
 @app.route("/comment/search/",methods = ["POST"])

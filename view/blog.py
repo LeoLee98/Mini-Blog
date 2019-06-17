@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from sqlmodel.UserModel import User,Blog,BlogComment,db
-from flask import Flask,request,jsonify,session
+from flask import Flask,request,jsonify,session,,make_response
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
@@ -28,6 +28,18 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
 
+@app.after_request
+def af_request(resp):     
+    """
+    #请求钩子，在所有的请求发生后执行，加入headers。
+    :param resp:
+    :return:
+    """
+    resp = make_response(resp)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
+    resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    return resp
 #opentracing中生成span context部分的头部
 
 # tracer = Tracer(

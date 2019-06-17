@@ -1,6 +1,7 @@
+# coding=utf-8
 import sys
 sys.path.append("..")
-from UserModel import User,db
+from sqlmodel.UserModel import User,db
 from flask import Flask,request,jsonify,session
 from flask_session import Session
 from redis import StrictRedis

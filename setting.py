@@ -37,7 +37,9 @@ if __name__ == '__main__':
                 ) from exc
             finally:
                 os.system('pip install redis')
-    os.system('pip install flask-sqlalchemy=2.1')             
+    os.system('pip install flask-sqlalchemy=2.1') 
+    os.system('pip install jaeger_client')
+    os.system('pip install opentracing')            
                                 
                 
 

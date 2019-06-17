@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from sqlmodel.UserModel import User,Blog,BlogComment,db
-from flask import Flask,request,jsonify,session,,make_response
+from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta

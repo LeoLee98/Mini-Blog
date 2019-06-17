@@ -9,6 +9,11 @@ from datetime import timedelta
 from flask_cors import CORS
 import hashlib
 import logging
+import json
+
+#读取配置
+with open("../config.json",'r') as load_f:
+    load_dict = json.load(load_f)
 
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
@@ -40,11 +45,8 @@ def af_request(resp):
 @app.route("/sso/regist/",methods = ["POST"])
 def regist():
     if request.method == 'POST':
-        print(request.headers)
-        print(request.form)
         userName = request.form['username']
         pwd = request.form['passwd']
-        print(userName,pwd)
         #生成hash并加盐
         md = hashlib.md5()
         md.update((userName + "leo" + pwd).encode('utf-8'))
@@ -73,7 +75,6 @@ def regist():
 @app.route("/sso/login/",methods = ["GET","POST"])
 def login():
     if request.method == 'POST':
-        print(request.headers)
         userName = request.form['username']
         pwd = request.form['passwd']
         #print(userName,pwd)

@@ -12,12 +12,17 @@ import hashlib
 import logging
 import requests
 import logging
+import json
 
 from flask import _request_ctx_stack as stack
 
+#读取配置
+with open("../config.json",'r') as load_f:
+    load_dict = json.load(load_f)
+
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
-app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379) 
+app.config['SESSION_REDIS']=StrictRedis(host=load_dict['redis_ip'], port=6379) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes= 30)
 Session(app)
 CORS(app, supports_credentials=True)
@@ -29,6 +34,9 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('blog')
 
+
+
+
 @app.after_request
 def af_request(resp):     
     """
@@ -37,9 +45,9 @@ def af_request(resp):
     :return:
     """
     resp = make_response(resp)
-    resp.headers['Access-Control-Allow-Origin'] = 'http://115.236.123.247:8090'
+    resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
-    resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type,end-user'
+    resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
     return resp
 
@@ -185,7 +193,7 @@ def getRank():
     # headers = getForwardHeaders(request)
     headers = request.headers
     try:
-        url = "http://127.0.0.1:8090"+ "/getRank/" 
+        url = load_dict['rank_service_domain']+ "/getRank/" 
         res = requests.get(url, headers=headers, timeout=5.0)
     except:
         res = None

@@ -2,10 +2,18 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import json
+
+#读取配置
+with open("../config.json",'r') as load_f:
+    load_dict = json.load(load_f)
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:mysql199806@115.159.182.126/Blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = load_dict['mysql']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] =True
 db = SQLAlchemy(app)
+
+
 
 #创建User模型
 class User(db.Model):

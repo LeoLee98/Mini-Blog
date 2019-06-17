@@ -9,10 +9,15 @@ from datetime import timedelta
 from flask_cors import CORS
 import hashlib
 import logging
+import json
+
+#读取配置
+with open("../config.json",'r') as load_f:
+    load_dict = json.load(load_f)
 
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
-app.config['SESSION_REDIS']=StrictRedis(host='115.159.182.126', port=6379) 
+app.config['SESSION_REDIS']=StrictRedis(host=load_dict['redis_ip'], port=6379) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
@@ -40,9 +45,9 @@ def af_request(resp):
     :return:
     """
     resp = make_response(resp)
-    resp.headers['Access-Control-Allow-Origin'] = 'http://115.236.123.247:8090'
+    resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
-    resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type,end-user'
+    resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
     return resp
 

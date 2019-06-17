@@ -4,6 +4,16 @@
 
 ## 环境配置
     运行:python ./setting.py
+    必须在sqlmodel,view文件夹的上级(../)目录中添加config.json用于配置以下相关信息
+
+    {
+    "redis_ip":"115.159.xxx.xxx", #redis地址
+    "mysql":"mysql+mysqlconnector://root:密码@地址/schema",
+    "Access-Control-Allow-Origin":"http://115.236.123.247:8090",#跨域名单
+    "Access-Control-Allow-Headers":"x-requested-with,content-type,end-user",#跨域头部
+    "rank_service_domain":"http://127.0.0.1:8090"#blog调用rank服务的地址
+    }
+
 ## SSOService 提供登录注册的接口
     运行方式:python ./sso.py 4444端口
 ### 1. 接口概述

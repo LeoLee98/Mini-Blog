@@ -22,6 +22,10 @@ from opentracing.ext import tags
 from opentracing.propagation import Format
 from opentracing_instrumentation.request_context import get_current_span, span_in_context
 
+#读取配置
+with open("../config.json",'r') as load_f:
+    load_dict = json.load(load_f)
+    
 app=Flask(__name__)
 app.config['SESSION_TYPE']='redis'
 app.config['SESSION_REDIS']=StrictRedis(host=load_dict['redis_ip'], port=6379) 
@@ -29,9 +33,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
 
-#读取配置
-with open("../config.json",'r') as load_f:
-    load_dict = json.load(load_f)
+
 
 logging.basicConfig(level=logging.DEBUG,
                     filename='blog-trace.log',

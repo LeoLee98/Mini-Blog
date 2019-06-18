@@ -47,9 +47,11 @@ def af_request(resp):
     """
     resp = make_response(resp)
     resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
+    resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
+    resp.headers['Cache-Control'] = 'no-cache'
     return resp
 
 #opentracing中生成span context部分的头部

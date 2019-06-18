@@ -1,0 +1,17 @@
+2019/06/18 14:13:28 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/18 14:13:29 - werkzeug - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/18 14:13:29 - werkzeug - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/18 14:13:29 - werkzeug - INFO - 87 - _internal -  * Running on http://127.0.0.1:5555/ (Press CTRL+C to quit)
+2019/06/18 14:14:56 - werkzeug - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\blog.py', reloading
+2019/06/18 14:14:56 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/18 14:15:03 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/18 14:15:04 - werkzeug - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/18 14:15:04 - werkzeug - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/18 14:15:05 - werkzeug - INFO - 87 - _internal -  * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)
+2019/06/18 14:15:15 - werkzeug - INFO - 87 - _internal - 192.168.20.191 - - [18/Jun/2019 14:15:15] "GET /blog/total HTTP/1.1" 200 -
+2019/06/18 14:15:16 - werkzeug - INFO - 87 - _internal - 192.168.20.191 - - [18/Jun/2019 14:15:16] "GET /favicon.ico HTTP/1.1" 500 -
+2019/06/18 14:15:53 - werkzeug - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\blog.py', reloading
+2019/06/18 14:15:53 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/18 14:15:54 - werkzeug - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/18 14:15:54 - werkzeug - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/18 14:15:55 - werkzeug - INFO - 87 - _internal -  * Running on http://0.0.0.0:5555/ (Press CTRL+C to quit)

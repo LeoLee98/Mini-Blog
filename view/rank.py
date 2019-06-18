@@ -109,4 +109,4 @@ def rankDate():
         return jsonify({'code':500,'msg':'sqlserver error'}) 
 
 if __name__ == '__main__':
-    app.run(debug = True,port = 7777)
+    app.run(host = '0.0.0.0', debug = True,port = 7777)

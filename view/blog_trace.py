@@ -270,7 +270,7 @@ def blogDelete():
 def getRank():
     headers = getForwardHeaders(request)
     try:
-        url = "http://127.0.0.1:8090"+ "/getRank/" 
+        url = load_dict['rank_service_domain']+ "/getRank/" 
         res = requests.get(url, headers=headers, timeout=5.0)
     except:
         res = None
@@ -282,4 +282,4 @@ def getRank():
 
             
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(host = '0.0.0.0', port=5555, debug=True)

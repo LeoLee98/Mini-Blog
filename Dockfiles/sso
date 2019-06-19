@@ -1,0 +1,8 @@
+FROM 115.236.123.247:5000/miniblog:base-final
+
+WORKDIR /Mini-Blog/view
+RUN rm /Mini-Blog/log/*
+RUN cd /Mini-Blog/view \ 
+&& nohup python sso.py& 
+
+CMD ["/bin/sh"]

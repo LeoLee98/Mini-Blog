@@ -215,6 +215,7 @@ def blogModify():
                     return jsonify({'code':0,'msg':'success update'})
                 except Exception as e:
                     logger.info(e,exc_info=True)
+                    db.rollback()
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})
@@ -260,6 +261,7 @@ def blogDelete():
                     return jsonify({'code':0,'msg':'success delete'})
                 except Exception as e:
                     logger.info(e,exc_info=True)
+                    db.rollback()
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})

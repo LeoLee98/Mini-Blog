@@ -101,6 +101,7 @@ def commentAdd():
                 return jsonify({'code':0,'msg':'success add'})
             except Exception as e:
                 logger.info(e,exc_info=True)
+                db.rollback()
                 return jsonify({'code':500,'msg':'sqlserver error'})
         else:
             return jsonify({'code':405,'msg':"request blog not exist"})

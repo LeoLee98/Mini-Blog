@@ -1,6 +1,7 @@
 # coding=utf-8
 import sys
 sys.path.append("..")
+sys.path.append("/Mini-Blog")
 from sqlmodel.UserModel import User,Blog,BlogComment,db
 from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session

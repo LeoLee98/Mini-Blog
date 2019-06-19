@@ -1,7 +1,8 @@
+create schema Blog;
+use Blog;
 create table User
 (
-    userid INT(10) auto_increment
-    useraccount VARCHAR(20) not null unique,
+    userid INT(10) auto_increment,
     username VARCHAR(25) not null,
     passwd VARCHAR(40) not null,
     primary key(userid)

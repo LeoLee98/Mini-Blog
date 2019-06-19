@@ -57,7 +57,8 @@ def regist():
     #检测是否注册
         try:
             detectFlag = User.query.filter_by(username = userName).first()
-        except:
+        except Exception as e :
+            logger.info(e,exc_info=True)
             return jsonify({'code':500,'msg':'sqlserver error'})
 
         if  detectFlag == None:
@@ -67,9 +68,9 @@ def regist():
                 db.session.commit()
                 session['username'] = userName
                 return jsonify({'code':0,'msg':'success regist'})
-            except:
-                db.rollback()
+            except Exception as e:
                 logger.info(e,exc_info=True)
+                db.rollback()
                 return jsonify({'code':500,'msg':'sqlserver error'})
         else:
             return jsonify({'code':401,'msg':'account has been registed'})

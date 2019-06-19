@@ -49,29 +49,38 @@ def af_request(resp):
 def commentQuery():   
         bid = request.form['blogid']
         try:
-            data = BlogComment.query.filter_by(blogid = bid).all()
-            resp = {}
-            resp['code'] = 0
-            resp['msg'] = 'success query'
-            resp_data = {}
-            resp_data['datacount'] = len(data)
+            ref_blog = Blog.query.filter_by(blogid = bid).first()
+            if not ref_blog == None:
+                try:
+                    data = BlogComment.query.filter_by(blogid = bid).all()
+                    resp = {}
+                    resp['code'] = 0
+                    resp['msg'] = 'success query'
+                    resp_data = {}
+                    resp_data['datacount'] = len(data)
 
-            data_list = []
-            for i in data :
-                single_data = {}
-                single_data['blogid'] = i.blogid
-                single_data['commentid'] = i.commentid
-                single_data['content'] = i.content
-                single_data['author'] = i.author
-                single_data['date'] = i.sub_date
-                data_list.append(single_data)
-            resp_data['data'] = data_list
-            resp['data'] = resp_data
+                    data_list = []
+                    for i in data :
+                        single_data = {}
+                        single_data['blogid'] = i.blogid
+                        single_data['commentid'] = i.commentid
+                        single_data['content'] = i.content
+                        single_data['author'] = i.author
+                        single_data['date'] = i.sub_date
+                        data_list.append(single_data)
+                    resp_data['data'] = data_list
+                    resp['data'] = resp_data
 
-            return jsonify(resp)
+                    return jsonify(resp)
+                except Exception as e:
+                    logger.info(e,exc_info=True)
+                    return jsonify({'code':500,'msg':'sqlserver error'}) 
+            else:
+                return jsonify({'code':405,'msg':"request blog not exist"})    
         except Exception as e:
             logger.info(e,exc_info=True)
-            return jsonify({'code':500,'msg':'sqlserver error'})  
+            return jsonify({'code':500,'msg':'sqlserver error'}) 
+        
 
 #为当前用户新增一条评论
 @app.route("/comment/add/",methods = ["POST"])

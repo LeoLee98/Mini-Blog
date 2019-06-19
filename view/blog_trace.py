@@ -36,7 +36,7 @@ CORS(app, supports_credentials=True)
 
 
 logging.basicConfig(level=logging.DEBUG,
-                    filename='blog-trace.log',
+                    filename='../log/blog-trace.log',
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('blog-trace')

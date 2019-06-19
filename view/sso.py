@@ -23,7 +23,7 @@ Session(app)
 CORS(app, supports_credentials=True)
 
 logging.basicConfig(level=logging.DEBUG,
-                    filename='sso.log',
+                    filename='../log/sso.log',
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('sso')

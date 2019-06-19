@@ -1,0 +1,4 @@
+2019/06/19 10:48:45 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/19 10:48:45 - werkzeug - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/19 10:48:45 - werkzeug - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/19 10:48:46 - werkzeug - INFO - 87 - _internal -  * Running on http://0.0.0.0:4444/ (Press CTRL+C to quit)

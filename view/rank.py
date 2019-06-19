@@ -24,7 +24,7 @@ CORS(app, supports_credentials=True)
 
 #输出到文件
 logging.basicConfig(level=logging.INFO,
-                    filename='rank.log',
+                    filename='../log/rank.log',
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('rank')

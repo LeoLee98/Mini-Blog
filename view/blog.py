@@ -29,7 +29,7 @@ CORS(app, supports_credentials=True)
 
 #logging
 logging.basicConfig(level=logging.INFO,
-                    filename='blog.log',
+                    filename='../log/blog.log',
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('blog')

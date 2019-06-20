@@ -162,7 +162,7 @@ def total():
             data_list.append(single_data)
         resp_data['data'] = data_list
         resp['data'] = resp_data
-        resp['offset'] = offset + 10
+        resp['offset'] = offset + len(data)
 
         return jsonify(resp)
     except:
@@ -197,7 +197,7 @@ def blogUserQuery():
                 data_list.append(single_data)
             resp_data['data'] = data_list
             resp['data'] = resp_data
-            resp['offset']  = offset + 10
+            resp['offset']  = offset + len(data)
 
             return jsonify(resp)
         except Exception as e:

@@ -62,6 +62,7 @@ def af_request(resp):
 @app.route("/getRank/",methods=['GET'])
 def rankComment():
     try:
+        db.session.commit()
         data = Blog.query.order_by(Blog.comment_num).limit(10).all()
         resp = {}
         resp['code'] = 0
@@ -90,6 +91,7 @@ def rankComment():
 @app.route("/rank/date/",methods=['GET'])
 def rankDate():
     try:
+        db.session.commit()
         data = Blog.query.order_by(Blog.sub_date).limit(10).all()
         resp = {}
         resp['code'] = 0

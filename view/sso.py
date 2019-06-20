@@ -60,6 +60,7 @@ def regist():
     
     #检测是否注册
         try:
+            db.session.commit()
             detectFlag = User.query.filter_by(username = userName).first()
         except Exception as e :
             logger.info(e,exc_info=True)
@@ -92,6 +93,7 @@ def login():
 
         #查询是否已经注册
         try:
+            db.session.commit()
             detectFlag = User.query.filter_by(username = userName).first()
         except Exception as e:
             logger.info(e,exc_info=True)

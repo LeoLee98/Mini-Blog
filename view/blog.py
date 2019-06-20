@@ -183,6 +183,7 @@ def blogDelete():
         bid = request.form['blogid']
         
         #行锁
+        db.session.commit()
         origin_data = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()
         if not origin_data == None:
             if origin_data.author == session['username']:

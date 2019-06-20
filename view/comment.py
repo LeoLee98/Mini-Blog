@@ -56,9 +56,11 @@ def commentQuery():
         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
         offset = 0
         try:
+            db.session.commit()
             ref_blog = Blog.query.filter_by(blogid = bid).first()
             if not ref_blog == None:
                 try:
+                    db.session.commit()
                     data = BlogComment.query.filter_by(blogid = bid).offset(offset).limit(10).all()
                     resp = {}
                     resp['code'] = 0
@@ -98,6 +100,7 @@ def commentAdd():
         userName = session['username']
         bid = request.form['blogid']
         content = request.form['content']
+        db.session.commit()
         ref_blog = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()
         print(ref_blog)
         if not ref_blog == None:

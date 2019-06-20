@@ -215,6 +215,8 @@ def blogModify():
         content = request.form['content']
         comment_num = request.form['comment_num']  
         
+        #为了避免缓存问题
+        db.session.commit()
         origin_data = Blog.query.filter_by(blogid = bid ).first()
         if not origin_data == None:
             if origin_data.author == session['username']:

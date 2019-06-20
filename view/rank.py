@@ -1,7 +1,9 @@
 # coding=utf-8
+import os 
 import sys
-sys.path.append("..")
-sys.path.append("/Mini-Blog")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
+Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
+sys.path.append(Root_DIR)
 from sqlmodel.UserModel import User,Blog,BlogComment,db
 from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session
@@ -12,20 +14,22 @@ import hashlib
 import logging
 import json
 
+
+
 #读取配置
-with open("../config.json",'r') as load_f:
+with open(os.path.join(Root_DIR, "config.json"),'r') as load_f:
     load_dict = json.load(load_f)
 
 app=Flask(__name__)
-app.config['SESSION_TYPE']='redis'
-app.config['SESSION_REDIS']=StrictRedis(host=load_dict['redis_ip'], port=6379) 
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
+# app.config['SESSION_TYPE']='redis'
+# app.config['SESSION_REDIS']=StrictRedis(host=load_dict['redis_ip'], port=6379) 
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 30)
 Session(app)
 CORS(app, supports_credentials=True)
 
 #输出到文件
 logging.basicConfig(level=logging.INFO,
-                    filename='../log/rank.log',
+                    filename=os.path.join(Root_DIR, 'log/rank.log'),
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('rank')
@@ -58,7 +62,7 @@ def af_request(resp):
 @app.route("/getRank/",methods=['GET'])
 def rankComment():
     try:
-        data = Blog.query.order_by(Blog.comment_num).all()
+        data = Blog.query.order_by(Blog.comment_num).limit(10).all()
         resp = {}
         resp['code'] = 0
         resp['msg'] = 'success query'
@@ -86,7 +90,7 @@ def rankComment():
 @app.route("/rank/date/",methods=['GET'])
 def rankDate():
     try:
-        data = Blog.query.order_by(Blog.sub_date).all()
+        data = Blog.query.order_by(Blog.sub_date).limit(10).all()
         resp = {}
         resp['code'] = 0
         resp['msg'] = 'success query'

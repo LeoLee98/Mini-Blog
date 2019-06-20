@@ -1,7 +1,9 @@
 # coding=utf-8
+import os 
 import sys
-sys.path.append("..")
-sys.path.append("/Mini-Blog")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
+Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
+sys.path.append(Root_DIR)
 from sqlmodel.UserModel import User,Blog,BlogComment,db
 from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session
@@ -15,10 +17,11 @@ import requests
 import logging
 import json
 
+
 from flask import _request_ctx_stack as stack
 
 #读取配置
-with open("../config.json",'r') as load_f:
+with open(os.path.join(Root_DIR, "config.json"),'r') as load_f:
     load_dict = json.load(load_f)
 
 app=Flask(__name__)
@@ -30,7 +33,7 @@ CORS(app, supports_credentials=True)
 
 #logging
 logging.basicConfig(level=logging.INFO,
-                    filename='../log/blog.log',
+                    filename=os.path.join(Root_DIR, 'log/blog.log'),
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('blog')
@@ -58,7 +61,10 @@ def af_request(resp):
 @app.route("/blog/total",methods = ["GET"])
 def total():     
         db.session.commit()
-        data = db.session.query(Blog).all()
+
+         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
+        offset = 0
+        data = db.session.query(Blog).offset(offset).limit(10).all()
         try:
             resp = {}
             resp['code'] = 0
@@ -77,7 +83,7 @@ def total():
                 data_list.append(single_data)
             resp_data['data'] = data_list
             resp['data'] = resp_data
-
+            resp['offset'] = offset + 10
             return jsonify(resp)
         except Exception as e:
             logger.info(e,exc_info=True)
@@ -88,9 +94,12 @@ def total():
 def blogUserQuery():
     if 'username' in session:
         userName = session['username']       
+
+        #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
+        offset = 0
         db.session.commit()
         try:
-            data = db.session.query(Blog).filter_by(author = userName).all()
+            data = db.session.query(Blog).filter_by(author = userName).offset(offset).limit(10).all()
             resp = {}
             resp['code'] = 0
             resp['msg'] = 'success query'
@@ -108,6 +117,7 @@ def blogUserQuery():
                 data_list.append(single_data)
             resp_data['data'] = data_list
             resp['data'] = resp_data
+            resp['offset'] = offset + 10
 
             return jsonify(resp)
         except Exception as e:
@@ -137,7 +147,7 @@ def blogModify():
                     return jsonify({'code':0,'msg':'success update'})
                 except Exception as e:
                     logger.info(e,exc_info=True)
-                    db.rollback()
+                    db.session.rollback()
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})
@@ -161,7 +171,7 @@ def blogAdd():
             return jsonify({'code':0,'msg':'success add'})
         except Exception as e:
             logger.info(e,exc_info=True)
-            db.rollback()
+            db.session.rollback()
             return jsonify({'code':500,'msg':'sqlserver error'})
     else:
         return jsonify({'code':403,'msg':'please log in'})
@@ -171,7 +181,9 @@ def blogAdd():
 def blogDelete():
     if 'username' in session: 
         bid = request.form['blogid']
-        origin_data = Blog.query.filter_by(blogid = bid).first()
+        
+        #行锁
+        origin_data = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()
         if not origin_data == None:
             if origin_data.author == session['username']:
                 try:
@@ -184,7 +196,7 @@ def blogDelete():
                     return jsonify({'code':0,'msg':'success delete'})
                 except Exception as e:
                     logger.info(e,exc_info=True)
-                    db.rollback()
+                    db.session.rollback()
                     return jsonify({'code':500,'msg':'sqlserver error'})
             else:
                 return jsonify({'code':404,'msg':"you don't have the power"})

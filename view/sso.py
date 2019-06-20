@@ -1,7 +1,9 @@
 # coding=utf-8
+import os 
 import sys
-sys.path.append("..")
-sys.path.append("/Mini-Blog")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
+Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
+sys.path.append(Root_DIR)
 from sqlmodel.UserModel import User,db
 from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session
@@ -12,8 +14,9 @@ import hashlib
 import logging
 import json
 
+
 #读取配置
-with open("../config.json",'r') as load_f:
+with open(os.path.join(Root_DIR, "config.json"),'r') as load_f:
     load_dict = json.load(load_f)
 
 app=Flask(__name__)
@@ -24,7 +27,7 @@ Session(app)
 CORS(app, supports_credentials=True)
 
 logging.basicConfig(level=logging.DEBUG,
-                    filename='../log/sso.log',
+                    filename=os.path.join(Root_DIR, 'log/sso.log'),
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('sso')
@@ -71,7 +74,7 @@ def regist():
                 return jsonify({'code':0,'msg':'success regist'})
             except Exception as e:
                 logger.info(e,exc_info=True)
-                db.rollback()
+                db.session.rollback()
                 return jsonify({'code':500,'msg':'sqlserver error'})
         else:
             return jsonify({'code':401,'msg':'account has been registed'})

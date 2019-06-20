@@ -1,0 +1,116 @@
+2019/06/20 11:20:24 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:20:26 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:20:26 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:20:26 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:20:27 - INFO - 85 - rank - object of type 'BaseQuery' has no len()
+Traceback (most recent call last):
+  File ".\Blog系统\Mini-Blog\view\rank.py", line 70, in rankComment
+    resp_data['datacount'] = len(data)
+TypeError: object of type 'BaseQuery' has no len()
+2019/06/20 11:20:28 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:20:28] "GET /getRank/ HTTP/1.1" 200 -
+2019/06/20 11:21:23 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:21:23 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:21:24 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:21:24 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:21:24 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:21:30 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:21:30 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:21:31 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:21:31 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:21:31 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:21:32 - INFO - 86 - rank - object of type 'BaseQuery' has no len()
+Traceback (most recent call last):
+  File ".\Blog系统\Mini-Blog\view\rank.py", line 71, in rankComment
+    resp_data['datacount'] = len(data)
+TypeError: object of type 'BaseQuery' has no len()
+2019/06/20 11:21:32 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:21:32] "GET /getRank/ HTTP/1.1" 500 -
+2019/06/20 11:21:52 - INFO - 86 - rank - object of type 'BaseQuery' has no len()
+Traceback (most recent call last):
+  File ".\Blog系统\Mini-Blog\view\rank.py", line 71, in rankComment
+    resp_data['datacount'] = len(data)
+TypeError: object of type 'BaseQuery' has no len()
+2019/06/20 11:21:52 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:21:52] "GET /getRank/ HTTP/1.1" 500 -
+2019/06/20 11:22:15 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:22:15 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:22:17 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:22:17 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:22:17 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:22:21 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:22:21] "GET /getRank/ HTTP/1.1" 200 -
+2019/06/20 11:22:33 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:22:33 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:22:35 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:22:35 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:22:35 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:22:37 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:22:37 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:22:39 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:22:39 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:22:39 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:22:41 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:22:41] "GET /getRank/ HTTP/1.1" 200 -
+2019/06/20 11:23:07 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:23:07 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:23:08 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:23:08 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:23:08 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:23:33 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:23:33 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:23:35 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:23:35 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:23:35 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:23:38 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:23:38 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:23:40 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:23:40 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:23:40 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:23:57 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:23:59 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:23:59 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:23:59 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:24:07 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:24:07] "GET /rank/date/ HTTP/1.1" 200 -
+2019/06/20 11:24:19 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:24:20 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:24:21 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:24:21 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:24:21 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:24:24 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:24:24] "GET /rank/date/ HTTP/1.1" 200 -
+2019/06/20 11:24:31 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:24:31 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:24:33 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:24:33 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:24:33 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:25:38 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:25:38 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:43:58 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:44:00 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:44:00 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:44:00 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:44:02 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:44:02] "GET /rank/date/ HTTP/1.1" 500 -
+2019/06/20 11:44:11 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:44:12 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:44:12 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:44:12 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:44:15 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:44:15] "GET /rank/date/ HTTP/1.1" 500 -
+2019/06/20 11:44:17 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:44:17] "GET /rank/date/ HTTP/1.1" 500 -
+2019/06/20 11:44:19 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:44:19] "GET /rank/date/ HTTP/1.1" 500 -
+2019/06/20 11:44:21 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:44:21] "GET /rank/date/ HTTP/1.1" 500 -
+2019/06/20 11:45:58 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:46:00 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:46:00 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:46:00 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:46:05 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:46:05] "GET /rank/date/ HTTP/1.1" 200 -
+2019/06/20 11:46:56 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:46:56 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:46:58 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:46:58 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:46:58 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:47:02 - INFO - 87 - _internal - 127.0.0.1 - - [20/Jun/2019 11:47:02] "GET /rank/date/ HTTP/1.1" 200 -
+2019/06/20 11:47:46 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:47:46 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:47:48 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:47:48 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:47:48 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 11:49:17 - INFO - 87 - _internal -  * Detected change in 'C:\\Users\\余委玲\\Desktop\\答辩\\Blog系统\\Mini-Blog\\view\\rank.py', reloading
+2019/06/20 11:49:17 - INFO - 87 - _internal -  * Restarting with stat
+2019/06/20 11:49:18 - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/20 11:49:18 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/20 11:49:18 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)

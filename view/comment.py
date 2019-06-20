@@ -1,7 +1,9 @@
 # coding=utf-8
+import os 
 import sys
-sys.path.append("..")
-sys.path.append("/Mini-Blog")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
+Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
+sys.path.append(Root_DIR)
 from sqlmodel.UserModel import User,Blog,BlogComment,db
 from flask import Flask,request,jsonify,session,make_response
 from flask_session import Session
@@ -11,9 +13,11 @@ from flask_cors import CORS
 import hashlib
 import logging
 import json
+import time
+
 
 #读取配置
-with open("../config.json",'r') as load_f:
+with open(os.path.join(Root_DIR, "config.json"),'r') as load_f:
     load_dict = json.load(load_f)
 
 app=Flask(__name__)
@@ -24,7 +28,7 @@ Session(app)
 CORS(app, supports_credentials=True)
 
 logging.basicConfig(level=logging.INFO,
-                    filename='../log/comment.log',
+                    filename=os.path.join(Root_DIR, 'log/comment.log'),
                     datefmt='%Y/%m/%d %H:%M:%S',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('comment')
@@ -49,11 +53,13 @@ def af_request(resp):
 @app.route("/comment/search/",methods = ["POST"])
 def commentQuery():   
         bid = request.form['blogid']
+        #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
+        offset = 0
         try:
             ref_blog = Blog.query.filter_by(blogid = bid).first()
             if not ref_blog == None:
                 try:
-                    data = BlogComment.query.filter_by(blogid = bid).all()
+                    data = BlogComment.query.filter_by(blogid = bid).offset(offset).limit(10).all()
                     resp = {}
                     resp['code'] = 0
                     resp['msg'] = 'success query'
@@ -71,6 +77,7 @@ def commentQuery():
                         data_list.append(single_data)
                     resp_data['data'] = data_list
                     resp['data'] = resp_data
+                    resp['offset'] = offset + 10
 
                     return jsonify(resp)
                 except Exception as e:
@@ -91,7 +98,8 @@ def commentAdd():
         userName = session['username']
         bid = request.form['blogid']
         content = request.form['content']
-        ref_blog = Blog.query.filter_by(blogid = bid).first()
+        ref_blog = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()
+        print(ref_blog)
         if not ref_blog == None:
             try:
                 new_data = BlogComment(bid,userName,content)
@@ -101,7 +109,7 @@ def commentAdd():
                 return jsonify({'code':0,'msg':'success add'})
             except Exception as e:
                 logger.info(e,exc_info=True)
-                db.rollback()
+                db.session.rollback()
                 return jsonify({'code':500,'msg':'sqlserver error'})
         else:
             return jsonify({'code':405,'msg':"request blog not exist"})

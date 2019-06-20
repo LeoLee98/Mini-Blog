@@ -1,6 +1,6 @@
 {
-    "redis_ip":"115.236.123.247", 
-    "mysql":"mysql+mysqlconnector://leo:mysql199806@115.236.123.247/Blog",
+    "redis_ip":"115.159.182.126", 
+    "mysql":"mysql+mysqlconnector://root:mysql199806@115.159.182.126/Blog",
     "Access-Control-Allow-Origin":"http://192.168.43.132:8090",
     "Access-Control-Allow-Headers":"x-requested-with,content-type,end-user",
     "rank_service_domain":"http://127.0.0.1:7777"

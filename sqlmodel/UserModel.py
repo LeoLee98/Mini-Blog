@@ -1,11 +1,17 @@
 # coding=utf-8
+import os 
+import sys
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
+Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
+sys.path.append(Root_DIR)
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import json
 
+
 #读取配置
-with open("../config.json",'r') as load_f:
+with open(os.path.join(Root_DIR, "config.json"),'r') as load_f:
     load_dict = json.load(load_f)
 
 app = Flask(__name__)

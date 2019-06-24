@@ -1,0 +1,8 @@
+2019/06/20 20:33:52 - werkzeug - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:33:52 - werkzeug - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:33:52 - werkzeug - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:33:53 - werkzeug - INFO - 122 - _internal -  * Running on http://0.0.0.0:4444/ (Press CTRL+C to quit)
+2019/06/20 20:38:51 - werkzeug - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:38:51 - werkzeug - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:38:51 - werkzeug - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:38:52 - werkzeug - INFO - 122 - _internal -  * Running on http://0.0.0.0:4444/ (Press CTRL+C to quit)

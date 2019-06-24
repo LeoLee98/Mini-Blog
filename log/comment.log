@@ -1,0 +1,13 @@
+2019/06/20 20:34:13 - werkzeug - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:34:13 - werkzeug - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:34:13 - werkzeug - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:34:14 - werkzeug - INFO - 122 - _internal -  * Running on http://0.0.0.0:6666/ (Press CTRL+C to quit)
+2019/06/20 20:39:05 - werkzeug - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:39:06 - werkzeug - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:39:06 - werkzeug - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:39:07 - werkzeug - INFO - 122 - _internal -  * Running on http://0.0.0.0:6666/ (Press CTRL+C to quit)
+2019/06/20 20:39:54 - werkzeug - INFO - 122 - _internal -  * Detected change in 'C:\\Users\\GZS13136\\Desktop\\MiniDemo\\Mini-Blog\\view\\comment.py', reloading
+2019/06/20 20:39:54 - werkzeug - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:39:54 - werkzeug - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:39:54 - werkzeug - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:39:56 - werkzeug - INFO - 122 - _internal -  * Running on http://0.0.0.0:6666/ (Press CTRL+C to quit)

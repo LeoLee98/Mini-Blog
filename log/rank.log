@@ -114,3 +114,21 @@ TypeError: object of type 'BaseQuery' has no len()
 2019/06/20 11:49:18 - WARNING - 87 - _internal -  * Debugger is active!
 2019/06/20 11:49:18 - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
 2019/06/20 11:49:18 - INFO - 87 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 16:24:52 - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 16:24:53 - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 16:24:53 - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 16:24:54 - INFO - 122 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 16:25:25 - INFO - 122 - _internal - 127.0.0.1 - - [20/Jun/2019 16:25:25] "GET /getRank/ HTTP/1.1" 200 -
+2019/06/20 20:24:42 - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:24:43 - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:24:43 - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:24:44 - INFO - 122 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 20:24:52 - INFO - 122 - _internal - 127.0.0.1 - - [20/Jun/2019 20:24:52] "GET /getRank/ HTTP/1.1" 200 -
+2019/06/20 20:34:19 - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:34:20 - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:34:20 - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:34:21 - INFO - 122 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)
+2019/06/20 20:39:14 - INFO - 122 - _internal -  * Restarting with stat
+2019/06/20 20:39:14 - WARNING - 122 - _internal -  * Debugger is active!
+2019/06/20 20:39:14 - INFO - 122 - _internal -  * Debugger PIN: 200-227-196
+2019/06/20 20:39:15 - INFO - 122 - _internal -  * Running on http://0.0.0.0:7777/ (Press CTRL+C to quit)

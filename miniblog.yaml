@@ -1,0 +1,195 @@
+# sso service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: sso
+  labels:
+    app: sso
+    service: sso
+spec:
+  ports:
+  - port: 4444
+    name: http
+  selector:
+    app: sso
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: miniblog-sso
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sso-v1
+  labels:
+    app: sso
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sso
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: sso
+        version: v1
+    spec:
+      serviceAccountName: miniblog-sso
+      containers:
+      - name: sso
+        image: 10.160.123.247:5000/sso:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4444
+---
+##################################################################################################
+# blog service (v2 is the version with url:rank:7777
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog
+  labels:
+    app: blog
+    service: blog
+spec:
+  ports:
+  - port: 5555
+    name: http
+  selector:
+    app: blog
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: miniblog-blog
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-v1
+  labels:
+    app: blog
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: blog
+        version: v1
+    spec:
+      serviceAccountName: miniblog-blog
+      containers:
+      - name: blog
+        image: 10.160.123.247:5000/blog:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5555
+---
+##################################################################################################
+# comment service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment
+  labels:
+    app: comment
+    service: comment
+spec:
+  ports:
+  - port: 6666
+    name: http
+  selector:
+    app: comment
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: miniblog-comment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-v1
+  labels:
+    app: comment
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: comment
+        version: v1
+    spec:
+      serviceAccountName: miniblog-comment
+      containers:
+      - name: comment
+        image: 10.160.123.247:5000/comment:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6666
+---
+##################################################################################################
+# rank services
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: rank
+  labels:
+    app: rank
+    service: rank
+spec:
+  ports:
+  - port: 7777
+    name: http
+  selector:
+    app: rank
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: miniblog-rank
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rank-v1
+  labels:
+    app: rank
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rank
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: rank
+        version: v1
+    spec:
+      serviceAccountName: miniblog-rank
+      containers:
+      - name: rank
+        image: 10.160.123.247:5000/rank:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 7777
+---

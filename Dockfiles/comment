@@ -1,0 +1,7 @@
+FROM 10.160.123.247:5000/miniblog:v2-base
+
+WORKDIR /Mini-Blog
+RUN rm /Mini-Blog/log/*
+EXPOSE 6666
+
+ENTRYPOINT ["python","/Mini-Blog/view/comment.py"]

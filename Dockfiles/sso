@@ -1,8 +1,7 @@
-FROM 115.236.123.247:5000/miniblog:base-final
+FROM 10.160.123.247:5000/miniblog:v2-base
 
-WORKDIR /Mini-Blog/view
+WORKDIR /Mini-Blog
 RUN rm /Mini-Blog/log/*
-RUN cd /Mini-Blog/view \ 
-&& nohup python sso.py& 
+EXPOSE 4444 
 
-CMD ["/bin/sh"]
+ENTRYPOINT ["python","/Mini-Blog/view/sso.py"]

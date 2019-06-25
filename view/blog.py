@@ -63,10 +63,14 @@ def total():
         db.session.commit()
 
          #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
-        offset = 0
-        data = db.session.query(Blog).offset(offset).limit(10).all()
+        offset = 0   
         try:
-            resp = {}
+           data = db.session.query(Blog).offset(offset).limit(10).all()
+        except Exception as e:
+            logger.info(e,exc_info=True)
+            return jsonify({'code':500,'msg':'sqlserver error'})
+
+         resp = {}
             resp['code'] = 0
             resp['msg'] = 'success query'
             resp_data = {}
@@ -85,9 +89,6 @@ def total():
             resp['data'] = resp_data
             resp['offset'] = offset + len(data)
             return jsonify(resp)
-        except Exception as e:
-            logger.info(e,exc_info=True)
-            return jsonify({'code':500,'msg':'sqlserver error'})
 
 #查询当前用户的博客
 @app.route("/blog/user/",methods = ["GET"])
@@ -96,11 +97,15 @@ def blogUserQuery():
         userName = session['username']       
 
         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
-        offset = 0
-        db.session.commit()
+        offset = 0      
         try:
+            db.session.commit()
             data = db.session.query(Blog).filter_by(author = userName).offset(offset).limit(10).all()
-            resp = {}
+        except Exception as e:
+            logger.info(e,exc_info=True)
+            return jsonify({'code':500,'msg':'sqlserver error'})
+        
+        resp = {}
             resp['code'] = 0
             resp['msg'] = 'success query'
             resp_data = {}
@@ -120,9 +125,6 @@ def blogUserQuery():
             resp['offset'] = offset + len(data)
 
             return jsonify(resp)
-        except Exception as e:
-            logger.info(e,exc_info=True)
-            return jsonify({'code':500,'msg':'sqlserver error'})
        
     else:
         return jsonify({'code':403,'msg':'please log in'})

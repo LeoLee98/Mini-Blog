@@ -7,3 +7,4 @@ redis==3.2.1
 opentracing==2.2.0
 jaeger_client==4.0.0
 opentracing_instrumentation==3.0.1
+mysql-connector

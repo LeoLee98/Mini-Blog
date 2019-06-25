@@ -4,7 +4,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
 Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
 sys.path.append(Root_DIR)
-from flask import Flask
+from flask import Flask,abort
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import json
@@ -18,6 +18,19 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = load_dict['mysql']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] =True
 db = SQLAlchemy(app)
+
+#对字符串进行适合长度的校验
+def checkStr(Str,lenMax):
+    if len(Str) != 0 and len(Str) <= lenMax:
+        pass
+    else:
+        abort(400)
+
+def checkInt(id):
+    if str.isdigit(id):
+        pass
+    else:
+        abort(400)
 
 
 

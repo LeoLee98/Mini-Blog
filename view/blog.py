@@ -4,8 +4,8 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
 Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
 sys.path.append(Root_DIR)
-from sqlmodel.UserModel import User,Blog,BlogComment,db
-from flask import Flask,request,jsonify,session,make_response
+from sqlmodel.UserModel import User,Blog,BlogComment,db,checkStr,checkInt
+from flask import Flask,request,jsonify,session,make_response,abort
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
@@ -38,6 +38,11 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
 logger = logging.getLogger('blog')
 
+"""自定义异常处理"""
+@app.errorhandler(400)
+def handle_400_error(error): 
+    return jsonify({'code':400,'msg':str(error)})
+
 
 
 
@@ -50,7 +55,10 @@ def af_request(resp):
     """
     resp = make_response(resp)
     resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
-    resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+    
+    if app.debug== True:
+        resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -60,42 +68,49 @@ def af_request(resp):
 #查询全部人员的博客数
 @app.route("/blog/total",methods = ["GET"])
 def total():     
-        db.session.commit()
+    db.session.commit()
 
-         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
-        offset = 0   
-        try:
-           data = db.session.query(Blog).offset(offset).limit(10).all()
-        except Exception as e:
-            logger.info(e,exc_info=True)
-            return jsonify({'code':500,'msg':'sqlserver error'})
+        #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
+    offset = 0   
+    try:
+        data = db.session.query(Blog).offset(offset).limit(10).all()
+    except Exception as e:
+        logger.info(e,exc_info=True)
+        return jsonify({'code':500,'msg':'sqlserver error'})
 
-         resp = {}
-            resp['code'] = 0
-            resp['msg'] = 'success query'
-            resp_data = {}
-            resp_data['datacount'] = len(data)
-            data_list = []
-            for i in data :
-                single_data = {}
-                single_data['blogid'] = i.blogid
-                single_data['author'] = i.author
-                single_data['content'] = i.content
-                single_data['title'] = i.title
-                single_data['comment_num'] = i.comment_num  #后续补上
-                single_data['date'] = i.sub_date
-                data_list.append(single_data)
-            resp_data['data'] = data_list
-            resp['data'] = resp_data
-            resp['offset'] = offset + len(data)
-            return jsonify(resp)
+    resp = {}
+    resp['code'] = 0
+    resp['msg'] = 'success query'
+    resp_data = {}
+    resp_data['datacount'] = len(data)
+    data_list = []
+    for i in data :
+        single_data = {}
+        single_data['blogid'] = i.blogid
+        single_data['author'] = i.author
+        single_data['content'] = i.content
+        single_data['title'] = i.title
+        single_data['comment_num'] = i.comment_num  #后续补上
+        single_data['date'] = i.sub_date
+        data_list.append(single_data)
+    resp_data['data'] = data_list
+    resp['data'] = resp_data
+    resp['offset'] = offset + len(data)
+    return jsonify(resp)
 
 #查询当前用户的博客
 @app.route("/blog/user/",methods = ["GET"])
 def blogUserQuery():
     if 'username' in session:
-        userName = session['username']       
+        #csrf check
+        if request.form['token'] == session['csrf']:
+            pass
+        else:
+            abort(400)  
 
+        userName = session['username']
+        
+     
         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
         offset = 0      
         try:
@@ -106,25 +121,25 @@ def blogUserQuery():
             return jsonify({'code':500,'msg':'sqlserver error'})
         
         resp = {}
-            resp['code'] = 0
-            resp['msg'] = 'success query'
-            resp_data = {}
-            resp_data['datacount'] = len(data)
-            data_list = []
-            for i in data :
-                single_data = {}
-                single_data['blogid'] = i.blogid
-                single_data['author'] = i.author
-                single_data['content'] = i.content
-                single_data['title'] = i.title
-                single_data['comment_num'] = i.comment_num #后续补上
-                single_data['date'] = i.sub_date
-                data_list.append(single_data)
-            resp_data['data'] = data_list
-            resp['data'] = resp_data
-            resp['offset'] = offset + len(data)
+        resp['code'] = 0
+        resp['msg'] = 'success query'
+        resp_data = {}
+        resp_data['datacount'] = len(data)
+        data_list = []
+        for i in data :
+            single_data = {}
+            single_data['blogid'] = i.blogid
+            single_data['author'] = i.author
+            single_data['content'] = i.content
+            single_data['title'] = i.title
+            single_data['comment_num'] = i.comment_num #后续补上
+            single_data['date'] = i.sub_date
+            data_list.append(single_data)
+        resp_data['data'] = data_list
+        resp['data'] = resp_data
+        resp['offset'] = offset + len(data)
 
-            return jsonify(resp)
+        return jsonify(resp)
        
     else:
         return jsonify({'code':403,'msg':'please log in'})
@@ -133,10 +148,20 @@ def blogUserQuery():
 @app.route("/blog/modify/",methods = ["POST"])
 def blogModify():
     if 'username' in session: 
+        #csrf check
+        if request.form['token'] == session['csrf']:
+            pass
+        else:
+            abort(400)  
+
         bid = request.form['blogid']
         title  = request.form['title']
         content = request.form['content']
-        comment_num = request.form['comment_num']  #可以去除
+        comment_num = request.form['comment_num']  
+        checkInt(bid)
+        checkInt(comment_num)
+        checkStr(title,40)
+        checkStr(content,65535)
         
         origin_data = Blog.query.filter_by(blogid = bid ).first()
         if not origin_data == None:
@@ -163,9 +188,17 @@ def blogModify():
 @app.route("/blog/add/",methods = ["POST"])
 def blogAdd():
     if 'username' in session: 
+        #csrf check
+        if request.form['token'] == session['csrf']:
+            pass
+        else:
+            abort(400)  
         userName = session['username']
         title = request.form['title']
         content = request.form['content']
+        checkStr(title,40)
+        checkStr(content,65535)
+
         try:
             new_data = Blog(title,userName,content)
             db.session.add(new_data)
@@ -181,9 +214,15 @@ def blogAdd():
 #为当前用户删除一条博客
 @app.route("/blog/delete/",methods = ["POST"])
 def blogDelete():
-    if 'username' in session: 
+    if 'username' in session:
+        #csrf check
+        if request.form['token'] == session['csrf']:
+            pass
+        else:
+            abort(400)  
+
         bid = request.form['blogid']
-        
+        checkInt(bid)
         #行锁
         db.session.commit()
         origin_data = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()

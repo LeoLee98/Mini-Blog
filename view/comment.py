@@ -4,8 +4,8 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #该执行模块所在文件夹的父文件夹
 Root_DIR = os.path.dirname(BASE_DIR) #该执行模块文件夹的父文件夹即项目根目录
 sys.path.append(Root_DIR)
-from sqlmodel.UserModel import User,Blog,BlogComment,db
-from flask import Flask,request,jsonify,session,make_response
+from sqlmodel.UserModel import User,Blog,BlogComment,db,checkStr,checkInt
+from flask import Flask,request,jsonify,session,make_response,abort
 from flask_session import Session
 from redis import StrictRedis
 from datetime import timedelta
@@ -42,7 +42,10 @@ def af_request(resp):
     """
     resp = make_response(resp)
     resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
-    resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+    
+    if app.debug== True:
+        resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -53,6 +56,7 @@ def af_request(resp):
 @app.route("/comment/search/",methods = ["POST"])
 def commentQuery():   
         bid = request.form['blogid']
+        checkInt(bid)
         #添加偏移量,之后在前端中加入此字段,应该是offset = request.form['offset']
         offset = 0
         try:
@@ -97,9 +101,17 @@ def commentQuery():
 def commentAdd():
     print(request)
     if 'username' in session: 
+        #csrf check
+        if request.form['token'] == session['csrf']:
+            pass
+        else:
+            abort(400)
+
         userName = session['username']
         bid = request.form['blogid']
         content = request.form['content']
+        checkInt(bid)
+        checkStr(content,65535)
         db.session.commit()
         ref_blog = db.session.query(Blog).filter(Blog.blogid == bid).with_for_update().first()
         print(ref_blog)

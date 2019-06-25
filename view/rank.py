@@ -42,6 +42,11 @@ logger = logging.getLogger('rank')
 
 # logging.getLogger('').addHandler(console)
 
+"""自定义异常处理"""
+@app.errorhandler(400)
+def handle_400_error(error): 
+    return jsonify({'code':400,'msg':str(error)})
+
 @app.after_request
 def af_request(resp):     
     """
@@ -51,7 +56,10 @@ def af_request(resp):
     """
     resp = make_response(resp)
     resp.headers['Access-Control-Allow-Origin'] = load_dict['Access-Control-Allow-Origin']
-    resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+    
+    if app.debug== True:
+        resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin')
+
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = load_dict['Access-Control-Allow-Headers']
     resp.headers['Access-Control-Allow-Credentials'] = 'true'

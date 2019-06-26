@@ -1,0 +1,9 @@
+2019/06/26 09:51:20 - werkzeug - INFO - 87 - _internal -  * Restarting with stat
+2019/06/26 09:51:21 - werkzeug - WARNING - 87 - _internal -  * Debugger is active!
+2019/06/26 09:51:21 - werkzeug - INFO - 87 - _internal -  * Debugger PIN: 154-804-553
+2019/06/26 09:51:22 - werkzeug - INFO - 87 - _internal -  * Running on http://0.0.0.0:4444/ (Press CTRL+C to quit)
+2019/06/26 09:51:58 - werkzeug - INFO - 87 - _internal - 127.0.0.1 - - [26/Jun/2019 09:51:58] "POST /sso/login/ HTTP/1.1" 200 -
+2019/06/26 09:52:06 - werkzeug - INFO - 87 - _internal - 127.0.0.1 - - [26/Jun/2019 09:52:06] "POST /sso/csrf/ HTTP/1.1" 405 -
+2019/06/26 09:52:11 - werkzeug - INFO - 87 - _internal - 127.0.0.1 - - [26/Jun/2019 09:52:11] "GET /sso/csrf/ HTTP/1.1" 200 -
+2019/06/26 09:52:21 - werkzeug - INFO - 87 - _internal - 127.0.0.1 - - [26/Jun/2019 09:52:21] "GET /sso/logout/ HTTP/1.1" 200 -
+2019/06/26 09:52:26 - werkzeug - INFO - 87 - _internal - 127.0.0.1 - - [26/Jun/2019 09:52:26] "GET /sso/csrf/ HTTP/1.1" 200 -

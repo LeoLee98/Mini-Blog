@@ -99,10 +99,9 @@ def commentQuery():
 #为当前用户新增一条评论
 @app.route("/comment/add/",methods = ["POST"])
 def commentAdd():
-    print(request)
     if 'username' in session: 
         #csrf check
-        if request.form['token'] == session['csrf']:
+        if request.headers.get('csrfToken')  == session['csrf']:
             pass
         else:
             abort(400)

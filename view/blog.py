@@ -103,7 +103,7 @@ def total():
 def blogUserQuery():
     if 'username' in session:
         #csrf check
-        if request.form['token'] == session['csrf']:
+        if request.headers.get('csrfToken') == session['csrf']:
             pass
         else:
             abort(400)  
@@ -149,7 +149,7 @@ def blogUserQuery():
 def blogModify():
     if 'username' in session: 
         #csrf check
-        if request.form['token'] == session['csrf']:
+        if request.headers.get('csrfToken')  == session['csrf']:
             pass
         else:
             abort(400)  
@@ -189,7 +189,7 @@ def blogModify():
 def blogAdd():
     if 'username' in session: 
         #csrf check
-        if request.form['token'] == session['csrf']:
+        if request.headers.get('csrfToken')  == session['csrf']:
             pass
         else:
             abort(400)  
@@ -216,7 +216,7 @@ def blogAdd():
 def blogDelete():
     if 'username' in session:
         #csrf check
-        if request.form['token'] == session['csrf']:
+        if request.headers.get('csrfToken')  == session['csrf']:
             pass
         else:
             abort(400)  

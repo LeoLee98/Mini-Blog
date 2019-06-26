@@ -238,7 +238,6 @@
             form-data
             {
                 "blogid": 1,  # 主键
-                "token": ""
             }
   - 返回值: 
 
@@ -331,7 +330,6 @@
         {
             "blogid": 1 #对应的blogid
             "content": "内容",
-            "token": ""
         } 
 
 - 返回结果:

@@ -59,6 +59,22 @@ def af_request(resp):
     resp.headers['Cache-Control'] = 'no-cache'
     return resp
 
+#取得token 
+@app.route("/sso/csrf/",methods = ["GET"])
+def csrf():
+    if 'username' not in session:
+        return jsonify({'code':403,'msg':'please log in'})
+    else:
+        md = hashlib.md5()
+        md.update(str(random.uniform(0,10)).encode('utf-8'))
+        csrfToken = md.hexdigest()
+        session['csrf'] = str(csrfToken)
+        return jsonify({'code':0,'token':str(csrfToken)})
+        
+
+
+
+
 @app.route("/sso/regist/",methods = ["POST"])
 def regist():
     userName = request.form['username']
@@ -69,8 +85,6 @@ def regist():
     md = hashlib.md5()
     md.update((userName + "leo" + pwd).encode('utf-8'))
     hashPwd = md.hexdigest()
-    md.update(str(random.uniform(0,10)).encode('utf-8'))
-    csrfToken = md.hexdigest()
     
 
 #检测是否注册
@@ -87,8 +101,7 @@ def regist():
             db.session.add(user)
             db.session.commit()
             session['username'] = userName
-            session['csrf'] = str(csrfToken)
-            return jsonify({'code':0,'msg':'success regist','token':str(csrfToken)})
+            return jsonify({'code':0,'msg':'success regist'})
         except Exception as e:
             logger.info(e,exc_info=True)
             db.session.rollback()
@@ -107,8 +120,6 @@ def login():
     md = hashlib.md5()
     md.update((userName + "leo" + pwd).encode('utf-8'))
     hashPwd = md.hexdigest()
-    md.update(str(random.uniform(0,10)).encode('utf-8'))
-    csrfToken = md.hexdigest()
 
     #查询是否已经注册
     try:
@@ -124,8 +135,7 @@ def login():
         realPwd = detectFlag.passwd
         if hashPwd == realPwd:
             session['username'] = userName
-            session['csrf'] = str(csrfToken)
-            return jsonify({'code':0,'msg':'successfully login','token':str(csrfToken)})
+            return jsonify({'code':0,'msg':'successfully login'})
         else:
             return jsonify({'code':404,'msg':'password wrong'})
 

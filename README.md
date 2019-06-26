@@ -24,6 +24,7 @@
 [注册] | /sso/regist | POST
 [注销] | /sso/logout | GET
 [获取用户信息] | /sso/getInfo | GET
+[获取csrftoken] | /sso/csrf/ | GET
 
 ### 2. 接口详情
 - 注册
@@ -104,6 +105,24 @@
             'code':0,
             'msg':'',
             'username':'username'
+        }
+    - 错误说明
+        
+        错误码 | 说明
+        ---- | -----
+        0   | 成功
+        403 | 用户还未登录
+
+
+- 获取csrftoken
+    - 路径:/sso/csrf/
+    - 请求参数：null   
+    - 返回参数：
+
+        json
+        {
+            'code':0,
+            'token':[csrftoken]
         }
     - 错误说明
         
@@ -195,6 +214,7 @@
                 "blogid": 1,  # 主键
 				"title": "标题",
                 "content": "博客正文",
+                "token": ""
             }
   - 返回值: 
 
@@ -218,6 +238,7 @@
             form-data
             {
                 "blogid": 1,  # 主键
+                "token": ""
             }
   - 返回值: 
 
@@ -242,6 +263,7 @@
             {
                 "title": "标题",
                 "content": "博客正文",
+                "token": ""
             }
 
   - 返回值: json
@@ -309,6 +331,7 @@
         {
             "blogid": 1 #对应的blogid
             "content": "内容",
+            "token": ""
         } 
 
 - 返回结果:

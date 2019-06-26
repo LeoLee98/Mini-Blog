@@ -1,9 +1,9 @@
 # Mini-Blog
 
-一个用于微服务架构演示的mini blog系统，前端界面提供List样式的博客展示，后台架构主要为四部分
+一个用于微服务架构演示的mini blog系统，python + flask + vue，前端界面提供List样式的博客展示，后台架构主要为四部分
 
 ## 环境配置
-    运行:python ./setting.py
+    运行:pip install -r requirements.txt
     必须在sqlmodel,view文件夹的上级(../)目录中添加config.json用于配置以下相关信息
 
     {
